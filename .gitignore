@@ -1,3 +1,10 @@
+# Custom
+trading_lambda_package/
+*.DS_Store
+trading_lambda.zip
+.terraform*
+terraform.tfstate*
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -127,3 +134,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+.terraform/
+
+*.idea/
