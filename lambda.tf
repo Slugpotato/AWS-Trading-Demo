@@ -56,34 +56,34 @@ resource "aws_lambda_layer_version" "pandas_layer" {
   compatible_runtimes = ["python3.7"]
 }
 
-#################
-# Cloudwatch
-#################
+# #################
+# # Cloudwatch
+# #################
 
-# resource "aws_cloudwatch_event_rule" "trading_lambda_rule" {
-#   name        = "scheduled-lambda-rule"
-#   description = "Fires every ten minutes on Weekdays between 7am to 12:55pm EST"
-#   # schedule_expression = "cron(0/10 12-18 ? * MON-FRI *)"
+resource "aws_cloudwatch_event_rule" "trading_lambda_rule" {
+  name        = "scheduled-lambda-rule"
+  description = "Fires every ten minutes on Weekdays between 7am to 12:55pm EST"
+  # schedule_expression = "cron(0/10 12-18 ? * MON-FRI *)"
 
-#   # For testing 
-#   schedule_expression = "rate(5 minutes)"
-# }
+  # For testing 
+  schedule_expression = "rate(5 minutes)"
+}
 
-# resource "aws_cloudwatch_event_target" "trading_lambda_target" {
-#   rule      = aws_cloudwatch_event_rule.trading_lambda_rule.name
-#   target_id = "lambda"
-#   arn       = aws_lambda_function.trading_lambda.arn
-# }
+resource "aws_cloudwatch_event_target" "trading_lambda_target" {
+  rule      = aws_cloudwatch_event_rule.trading_lambda_rule.name
+  target_id = "lambda"
+  arn       = aws_lambda_function.trading_lambda.arn
+}
 
-# resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_foo" {
-#   statement_id  = "AllowExecutionFromCloudWatch"
-#   action        = "lambda:InvokeFunction"
-#   function_name = aws_lambda_function.trading_lambda.function_name
-#   principal     = "events.amazonaws.com"
-#   source_arn    = aws_cloudwatch_event_rule.trading_lambda_rule.arn
-# }
+resource "aws_lambda_permission" "allow_cloudwatch_to_call_check_foo" {
+  statement_id  = "AllowExecutionFromCloudWatch"
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.trading_lambda.function_name
+  principal     = "events.amazonaws.com"
+  source_arn    = aws_cloudwatch_event_rule.trading_lambda_rule.arn
+}
 
-# resource "aws_cloudwatch_log_group" "log_group" {
-#   name              = "/aws/lambda/${aws_lambda_function.trading_lambda.function_name}"
-#   retention_in_days = 14
-# }
+resource "aws_cloudwatch_log_group" "log_group" {
+  name              = "/aws/lambda/${aws_lambda_function.trading_lambda.function_name}"
+  retention_in_days = 14
+}

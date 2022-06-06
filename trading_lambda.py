@@ -15,12 +15,10 @@ def handler(event, context):
     alpaca_api_api_version = os.environ['api_version']
     alpaca_api_base_url = os.environ['base_url']
 
-    print(f"Version number is {alpaca_api_api_version}")
-
     api = tradeapi.REST(key_id=alpaca_api_key_id, secret_key=alpaca_api_secret_key, api_version=alpaca_api_api_version,
                         base_url=alpaca_api_base_url)
 
     for stock in stocks_to_buy:
-        api.submit_order(stock, 1, 'buy', 'limit', 'gtc', limit_price='200', stop_price=None, client_order_id=None,
+        api.submit_order(stock, 1, 'buy', 'limit', 'gtc', limit_price='130', stop_price=None, client_order_id=None,
                          extended_hours=None)
     
